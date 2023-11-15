@@ -49,7 +49,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public JwtAuthorizationFilter jwtAuthorizationFilter(){
+    public JwtAuthorizationFilter jwtAuthorizationFilter() {
         return new JwtAuthorizationFilter(jwtUtil, userDetailsService);
     }
 
@@ -68,8 +68,8 @@ public class WebSecurityConfig {
             authorizeHttpRequests
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .requestMatchers("/").permitAll()
-                .requestMatchers("/api/user/**").permitAll()
-                .requestMatchers("/api/admin/**").hasAuthority(Authority.ADMIN)
+                .requestMatchers("/api/v1/user/**").permitAll()
+                .requestMatchers("/api/v1/admin/**").hasAuthority(Authority.ADMIN)
                 .anyRequest().authenticated()
         );
 

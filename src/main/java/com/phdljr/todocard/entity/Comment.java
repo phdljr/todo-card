@@ -1,6 +1,5 @@
 package com.phdljr.todocard.entity;
 
-import com.fasterxml.jackson.databind.ser.Serializers.Base;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "TB_COMMENT")
 public class Comment extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
