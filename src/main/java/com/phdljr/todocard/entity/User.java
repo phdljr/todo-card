@@ -29,12 +29,10 @@ public class User extends BaseEntity {
     private Long id;
 
     @Size(min = 4, max = 10, message = "길이가 4~10 사이여야 합니다.")
-    @Pattern(regexp = "[a-z0-9]", message = "소문자 알파벳과 숫자만 입력가능합니다.")
-    @Column(nullable = false)
+    @Pattern(regexp = "[a-z0-9]{4,10}", message = "소문자 알파벳과 숫자만 입력가능합니다.")
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Size(min = 8, max = 15, message = "길이가 8~15 사이여야 합니다.")
-    @Pattern(regexp = "[a-zA-Z0-9]", message = "영문자와 숫자만 입력가능합니다.")
     @Column(nullable = false)
     private String password;
 

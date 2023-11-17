@@ -30,13 +30,17 @@ public class JwtUtil {
     public static final String AUTHORIZATION_KEY = "auth";
     // Token 식별자
     public static final String BEARER_PREFIX = "Bearer ";
+    // 암호화 알고리즘
+    private final SecureDigestAlgorithm<SecretKey, SecretKey> signatureAlgorithm = SIG.HS256;
+
     // 토큰 만료시간
-    private final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
+    @Value("${custom.jwt.expiration-period}")
+    private long TOKEN_TIME;
 
     @Value("${custom.jwt.secret-key}") // Base64 Encode 한 SecretKey
     private String secretKey;
+
     private SecretKey key;
-    private final SecureDigestAlgorithm<SecretKey, SecretKey> signatureAlgorithm = SIG.HS256;
 
     @PostConstruct
     public void init() {

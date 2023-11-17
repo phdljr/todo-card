@@ -1,4 +1,4 @@
-package com.phdljr.todocard.dto;
+package com.phdljr.todocard.dto.request;
 
 import lombok.Getter;
 

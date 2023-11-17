@@ -1,5 +1,6 @@
 package com.phdljr.todocard.entity;
 
+import com.phdljr.todocard.dto.response.CommentResponseDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,4 +34,15 @@ public class Comment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "card_id", nullable = false)
     private Card card;
+
+    public CommentResponseDto toDto() {
+        return CommentResponseDto.builder()
+            .id(id)
+            .username(user.getUsername())
+            .card_id(card.getId())
+            .content(content)
+            .createdAt(getCreatedAt())
+            .modifiedAt(getModifiedAt())
+            .build();
+    }
 }

@@ -1,7 +1,7 @@
 package com.phdljr.todocard.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.phdljr.todocard.dto.LoginRequestDto;
+import com.phdljr.todocard.dto.request.LoginRequestDto;
 import com.phdljr.todocard.entity.UserRole;
 import com.phdljr.todocard.security.jwt.JwtUtil;
 import com.phdljr.todocard.security.userdetails.UserDetailsImpl;
@@ -22,7 +22,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
-        setFilterProcessesUrl("/api/user/login");
+        setFilterProcessesUrl("/api/v1/user/login");
     }
 
     @Override
