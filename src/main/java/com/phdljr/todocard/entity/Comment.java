@@ -8,15 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "TB_COMMENT")
 public class Comment extends BaseEntity {
@@ -34,6 +33,13 @@ public class Comment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "card_id", nullable = false)
     private Card card;
+
+    @Builder
+    public Comment(final String content, final User user, final Card card) {
+        this.content = content;
+        this.user = user;
+        this.card = card;
+    }
 
     public CommentResponseDto toDto() {
         return CommentResponseDto.builder()

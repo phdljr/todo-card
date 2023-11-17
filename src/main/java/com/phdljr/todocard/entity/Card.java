@@ -2,8 +2,6 @@ package com.phdljr.todocard.entity;
 
 import com.phdljr.todocard.dto.request.CardRequestDto;
 import com.phdljr.todocard.dto.response.CardResponseDto;
-import com.phdljr.todocard.dto.response.CardResponseDto.CardResponseDtoBuilder;
-import com.phdljr.todocard.dto.response.CommentResponseDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,15 +14,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "TB_CARD")
 public class Card extends BaseEntity {
@@ -40,18 +36,24 @@ public class Card extends BaseEntity {
     private String content;
 
     @Column
-    private boolean isFinished;
+    private boolean isFinished = false;
 
     @Column
-    private boolean isHidden;
+    private boolean isHidden = false;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Builder.Default
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
+
+    @Builder
+    public Card(final String title, final String content, final User user) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
+    }
 
     public CardResponseDto toCardResponseDto() {
         return CardResponseDto.builder()

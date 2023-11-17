@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class CardsResponseDto {
+
     private String username;
     private List<CardResponseDto> cards;
 }
