@@ -47,7 +47,7 @@ public class CardServiceImpl implements CardService {
             .orElseThrow(() -> new NotFoundCardException("할일 카드를 찾지 못하였습니다."));
 
         if (!card.getUser().getId().equals(user.getId())) {
-            throw new NotMatchUser("회원님의 할일 카드가 아닙니다.");
+            throw new NotMatchUserException("회원님의 할일 카드가 아닙니다.");
         }
 
         card.update(cardRequestDto);
@@ -74,7 +74,7 @@ public class CardServiceImpl implements CardService {
             .orElseThrow(() -> new NotFoundCardException("할일 카드를 찾지 못하였습니다."));
 
         if (!card.getUser().getId().equals(user.getId())) {
-            throw new NotMatchUser("회원님의 할일 카드가 아닙니다.");
+            throw new NotMatchUserException("회원님의 할일 카드가 아닙니다.");
         }
 
         cardRepository.delete(card);
@@ -88,7 +88,7 @@ public class CardServiceImpl implements CardService {
             .orElseThrow(() -> new NotFoundCardException("할일 카드를 찾지 못하였습니다."));
 
         if (!card.getUser().getId().equals(user.getId())) {
-            throw new NotMatchUser("회원님의 할일 카드가 아닙니다.");
+            throw new NotMatchUserException("회원님의 할일 카드가 아닙니다.");
         }
 
         card.toggleHide();
@@ -102,7 +102,7 @@ public class CardServiceImpl implements CardService {
             .orElseThrow(() -> new NotFoundCardException("할일 카드를 찾지 못하였습니다."));
 
         if (!card.getUser().getId().equals(user.getId())) {
-            throw new NotMatchUser("회원님의 할일 카드가 아닙니다.");
+            throw new NotMatchUserException("회원님의 할일 카드가 아닙니다.");
         }
 
         card.toggleFinish();
