@@ -41,6 +41,10 @@ public class Comment extends BaseEntity {
         this.card = card;
     }
 
+    public void update(String content){
+        this.content = content;
+    }
+
     public CommentResponseDto toDto() {
         return CommentResponseDto.builder()
             .id(id)
