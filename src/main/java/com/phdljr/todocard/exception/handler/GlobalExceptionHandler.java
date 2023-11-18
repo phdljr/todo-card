@@ -3,6 +3,7 @@ package com.phdljr.todocard.exception.handler;
 import com.phdljr.todocard.exception.dto.ExceptionResponseDto;
 import com.phdljr.todocard.exception.type.CustomException;
 import com.phdljr.todocard.exception.type.NotFoundCardException;
+import com.phdljr.todocard.exception.type.NotFoundCommentException;
 import com.phdljr.todocard.exception.type.NotMatchUserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
             .body(CustomException.NOT_FOUND_CARD.toDto());
+    }
+
+    @ExceptionHandler(NotFoundCommentException.class)
+    public ResponseEntity<ExceptionResponseDto> handleNotFoundCommentException() {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(CustomException.NOT_FOUND_COMMENT.toDto());
     }
 
     @ExceptionHandler(NotMatchUserException.class)
