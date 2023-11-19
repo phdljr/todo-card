@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
 
-    List<Card> findByTitleContainsOrderByCreatedAtDesc(String title);
+    List<Card> findByTitleContainsOrderByUserAscCreatedAtDesc(String title);
 
-    List<Card> findAllByOrderByCreatedAtDesc();
+    List<Card> findAllByOrderByUserAscCreatedAtDesc();
 }

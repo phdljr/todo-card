@@ -36,10 +36,11 @@ public class CardServiceImpl implements CardService {
     public List<CardsResponseDto> getCards(String searchTitle) {
         List<CardsResponseDto> list;
         if (StringUtils.hasText(searchTitle)) {
-            list = cardRepository.findByTitleContainsOrderByCreatedAtDesc(searchTitle).stream()
+            list = cardRepository.findByTitleContainsOrderByUserAscCreatedAtDesc(searchTitle)
+                .stream()
                 .map(Card::toCardsResponseDto).toList();
         } else {
-            list = cardRepository.findAllByOrderByCreatedAtDesc().stream()
+            list = cardRepository.findAllByOrderByUserAscCreatedAtDesc().stream()
                 .map(Card::toCardsResponseDto).toList();
         }
 
