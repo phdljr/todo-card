@@ -10,7 +10,7 @@ public interface CardService {
 
     CardResponseDto getCard(Long cardId);
 
-    List<CardsResponseDto> getCards();
+    List<CardsResponseDto> getCards(String searchTitle);
 
     CardResponseDto updateCard(Long cardId, CardRequestDto cardRequestDto, User user);
 

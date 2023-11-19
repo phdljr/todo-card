@@ -8,7 +8,8 @@ public interface CommentService {
 
     CommentResponseDto createComment(Long cardId, CommentRequestDto commentRequestDto, User user);
 
-    CommentResponseDto updateComment(Long commentId, CommentRequestDto commentRequestDto, User user);
+    CommentResponseDto updateComment(Long commentId, CommentRequestDto commentRequestDto,
+        User user);
 
     Long deleteComment(Long commentId, User user);
 }

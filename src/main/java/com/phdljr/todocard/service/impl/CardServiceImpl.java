@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Slf4j
 @Service
@@ -32,9 +33,14 @@ public class CardServiceImpl implements CardService {
 
     // TODO
     @Override
-    public List<CardsResponseDto> getCards() {
+    public List<CardsResponseDto> getCards(String searchTitle) {
+        if (StringUtils.hasText(searchTitle)) {
+            cardRepository.findByTitle(searchTitle);
+        } else {
+
+        }
         List<Card> cards = cardRepository.findAll();
-        // 1. username별로 나눈다
+        // 1. username별로 나눈다. 또는 username별로 정렬시킨다.
         // 2. 나뉜 카드를 dto로 만든다.
         return null;
     }

@@ -35,7 +35,7 @@ public class JwtUtil {
 
     // 토큰 만료시간
     @Value("${custom.jwt.expiration-period}")
-    private long TOKEN_TIME;
+    private long tokenTime;
 
     @Value("${custom.jwt.secret-key}") // Base64 Encode 한 SecretKey
     private String secretKey;
@@ -56,7 +56,7 @@ public class JwtUtil {
             Jwts.builder()
                 .subject(username) // 사용자 식별자값(ID)
                 .claim(AUTHORIZATION_KEY, role)
-                .expiration(new Date(date.getTime() + TOKEN_TIME))
+                .expiration(new Date(date.getTime() + tokenTime))
                 .issuedAt(date) // 발급일
                 .signWith(key, signatureAlgorithm) // 암호화 알고리즘
                 .compact();
@@ -78,14 +78,18 @@ public class JwtUtil {
             return true;
         } catch (SecurityException | MalformedJwtException | SignatureException e) {
             log.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
+            throw e;
         } catch (ExpiredJwtException e) {
             log.error("Expired JWT token, 만료된 JWT 토큰입니다.");
+            throw e;
         } catch (UnsupportedJwtException e) {
             log.error("Unsupported JWT token, 지원되지 않는 JWT 토큰입니다.");
+            throw e;
         } catch (IllegalArgumentException e) {
             log.error("JWT claims is empty, 잘못된 JWT 토큰입니다.");
+            throw e;
         }
-        return false;
+//        return false;
     }
 
     // 토큰에서 사용자 정보 가져오기

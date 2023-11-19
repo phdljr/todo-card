@@ -1,5 +1,8 @@
 package com.phdljr.todocard.entity;
 
+import lombok.Getter;
+
+@Getter
 public enum UserRole {
     USER(Authority.USER),
     ADMIN(Authority.ADMIN);
@@ -8,10 +11,6 @@ public enum UserRole {
 
     UserRole(String authority) {
         this.authority = authority;
-    }
-
-    public String getAuthority() {
-        return this.authority;
     }
 
     public static class Authority {

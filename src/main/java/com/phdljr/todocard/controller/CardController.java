@@ -7,6 +7,7 @@ import com.phdljr.todocard.security.userdetails.UserDetailsImpl;
 import com.phdljr.todocard.service.CardService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
@@ -33,13 +36,15 @@ public class CardController {
     }
 
     @GetMapping("/cards")
-    public ResponseEntity<List<CardsResponseDto>> getCards() {
-        List<CardsResponseDto> cardsResponseDto = cardService.getCards();
+    public ResponseEntity<List<CardsResponseDto>> getCards(
+        @RequestParam(required = false, name = "title", defaultValue = "") String title) {
+        List<CardsResponseDto> cardsResponseDto = cardService.getCards(title);
         return ResponseEntity.ok(cardsResponseDto);
     }
 
     @PostMapping("/cards")
-    public ResponseEntity<CardResponseDto> createCard(@RequestBody CardRequestDto cardRequestDto,
+    public ResponseEntity<CardResponseDto> createCard(
+        @RequestBody CardRequestDto cardRequestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         CardResponseDto cardResponseDto = cardService.createCard(cardRequestDto,
             userDetails.getUser());
@@ -47,7 +52,8 @@ public class CardController {
     }
 
     @PutMapping("/cards/{cardId}")
-    public ResponseEntity<CardResponseDto> updateCard(@PathVariable Long cardId,
+    public ResponseEntity<CardResponseDto> updateCard(
+        @PathVariable Long cardId,
         @RequestBody CardRequestDto cardRequestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         CardResponseDto cardResponseDto = cardService.updateCard(cardId, cardRequestDto,

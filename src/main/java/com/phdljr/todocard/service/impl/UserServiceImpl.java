@@ -4,11 +4,12 @@ import com.phdljr.todocard.dto.request.SignUpRequestDto;
 import com.phdljr.todocard.dto.response.SignUpResponseDto;
 import com.phdljr.todocard.entity.User;
 import com.phdljr.todocard.entity.UserRole;
+import com.phdljr.todocard.exception.type.DuplicateEmailException;
+import com.phdljr.todocard.exception.type.DuplicateUsernameException;
 import com.phdljr.todocard.repository.UserRepository;
 import com.phdljr.todocard.service.UserService;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,14 +30,14 @@ public class UserServiceImpl implements UserService {
         // 회원 중복 확인
         Optional<User> checkUsername = userRepository.findByUsername(username);
         if (checkUsername.isPresent()) {
-            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
+            throw new DuplicateUsernameException();
         }
 
         // email 중복확인
         String email = requestDto.getEmail();
         Optional<User> checkEmail = userRepository.findByEmail(email);
         if (checkEmail.isPresent()) {
-            throw new IllegalArgumentException("중복된 Email 입니다.");
+            throw new DuplicateEmailException();
         }
 
         // 사용자 ROLE 확인
