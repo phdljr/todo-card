@@ -3,6 +3,7 @@ package com.phdljr.todocard.security.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phdljr.todocard.dto.request.LoginRequestDto;
 import com.phdljr.todocard.entity.UserRole;
+import com.phdljr.todocard.exception.type.CustomException;
 import com.phdljr.todocard.security.jwt.JwtUtil;
 import com.phdljr.todocard.security.userdetails.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -59,8 +61,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request,
         HttpServletResponse response, AuthenticationException failed) {
+
         log.error(failed.getMessage());
-        response.setStatus(401);
+
+        CustomException customException = CustomException.BAD_LOGIN;
+        ObjectMapper objectMapper = new ObjectMapper();
+        response.setStatus(customException.getStatusCode());
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        try {
+            response.getWriter().write(objectMapper.writeValueAsString(customException.toDto()));
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
     }
 
 }
