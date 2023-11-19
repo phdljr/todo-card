@@ -2,9 +2,11 @@ package com.phdljr.todocard.entity;
 
 import com.phdljr.todocard.dto.request.CardRequestDto;
 import com.phdljr.todocard.dto.response.CardResponseDto;
+import com.phdljr.todocard.dto.response.CardsResponseDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,7 +43,7 @@ public class Card extends BaseEntity {
     @Column
     private boolean isHidden = false;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -66,6 +68,19 @@ public class Card extends BaseEntity {
             .isFinished(isFinished)
             .isHidden(isHidden)
             .comments(comments.stream().map(Comment::toDto).toList())
+            .build();
+    }
+
+    public CardsResponseDto toCardsResponseDto() {
+        return CardsResponseDto.builder()
+            .id(id)
+            .username(user.getUsername())
+            .title(title)
+            .content(content)
+            .createdAt(getCreatedAt())
+            .modifiedAt(getModifiedAt())
+            .isFinished(isFinished)
+            .isHidden(isHidden)
             .build();
     }
 

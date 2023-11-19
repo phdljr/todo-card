@@ -31,18 +31,19 @@ public class CardServiceImpl implements CardService {
         return card.toCardResponseDto();
     }
 
-    // TODO
     @Override
+    @Transactional(readOnly = true)
     public List<CardsResponseDto> getCards(String searchTitle) {
+        List<CardsResponseDto> list;
         if (StringUtils.hasText(searchTitle)) {
-            cardRepository.findByTitle(searchTitle);
+            list = cardRepository.findByTitleContainsOrderByCreatedAtDesc(searchTitle).stream()
+                .map(Card::toCardsResponseDto).toList();
         } else {
-
+            list = cardRepository.findAllByOrderByCreatedAtDesc().stream()
+                .map(Card::toCardsResponseDto).toList();
         }
-        List<Card> cards = cardRepository.findAll();
-        // 1. username별로 나눈다. 또는 username별로 정렬시킨다.
-        // 2. 나뉜 카드를 dto로 만든다.
-        return null;
+
+        return list;
     }
 
     @Override
