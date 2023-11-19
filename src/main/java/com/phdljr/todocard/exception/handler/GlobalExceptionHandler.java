@@ -2,6 +2,8 @@ package com.phdljr.todocard.exception.handler;
 
 import com.phdljr.todocard.exception.dto.ExceptionResponseDto;
 import com.phdljr.todocard.exception.type.CustomException;
+import com.phdljr.todocard.exception.type.DuplicateEmailException;
+import com.phdljr.todocard.exception.type.DuplicateUsernameException;
 import com.phdljr.todocard.exception.type.NotFoundCardException;
 import com.phdljr.todocard.exception.type.NotFoundCommentException;
 import com.phdljr.todocard.exception.type.NotMatchUserException;
@@ -32,6 +34,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(CustomException.NOT_MATCH_USER.toDto());
+    }
+
+    @ExceptionHandler(DuplicateUsernameException.class)
+    public ResponseEntity<ExceptionResponseDto> handleDuplicateUsernameException() {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(CustomException.DUPLICATE_USERNAME.toDto());
+    }
+
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<ExceptionResponseDto> handleDuplicateEmailException() {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(CustomException.DUPLICATE_USERNAME.toDto());
     }
 
 }
