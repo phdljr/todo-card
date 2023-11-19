@@ -1,8 +1,8 @@
 package com.phdljr.todocard.config;
 
-import com.phdljr.todocard.entity.UserRole.Authority;
 import com.phdljr.todocard.security.filter.JwtAuthenticationFilter;
 import com.phdljr.todocard.security.filter.JwtAuthorizationFilter;
+import com.phdljr.todocard.security.filter.JwtExceptionHandlerFilter;
 import com.phdljr.todocard.security.jwt.JwtUtil;
 import com.phdljr.todocard.security.userdetails.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +30,8 @@ public class WebSecurityConfig {
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final JwtExceptionHandlerFilter jwtExceptionHandlerFilter;
+//    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -66,13 +68,15 @@ public class WebSecurityConfig {
         );
 
         http.authorizeHttpRequests(authorizeHttpRequests ->
-            authorizeHttpRequests
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .requestMatchers("/").permitAll()
-                .requestMatchers("/api/v1/user/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/cards/**").permitAll()
+                authorizeHttpRequests
+                    .requestMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**")
+                    .permitAll()
+                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                    .requestMatchers("/").permitAll()
+                    .requestMatchers("/api/v1/user/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/v1/cards/**").permitAll()
 //                .requestMatchers("/api/v1/admin/**").hasAuthority(Authority.ADMIN)
-                .anyRequest().authenticated()
+                    .anyRequest().authenticated()
         );
 
         http.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(
@@ -80,8 +84,11 @@ public class WebSecurityConfig {
 
         http.formLogin(AbstractHttpConfigurer::disable);
 
+        http.addFilterBefore(jwtExceptionHandlerFilter, JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+//        http.exceptionHandling(handler -> handler.accessDeniedHandler(customAccessDeniedHandler));
 
         return http.build();
     }
