@@ -17,6 +17,7 @@ public enum CustomException {
     AUTHENTICATION_ERROR(400, "잘못된 인증입니다."),
     DUPLICATE_USERNAME(400, "중복된 username입니다."),
     DUPLICATE_EMAIL(400, "중복된 email입니다."),
+    PRIVATE_CARD_ACCESS(400, "작성자만 조회할 수 있습니다."),
     BAD_LOGIN(400, "회원을 찾을 수 없습니다.");
 
     private final int statusCode;

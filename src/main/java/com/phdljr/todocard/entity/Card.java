@@ -43,6 +43,9 @@ public class Card extends BaseEntity {
     @Column
     private boolean isHidden = false;
 
+    @Column
+    private boolean isPrivate = false;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -67,6 +70,7 @@ public class Card extends BaseEntity {
             .modifiedAt(getModifiedAt())
             .isFinished(isFinished)
             .isHidden(isHidden)
+            .isPrivate(isPrivate)
             .comments(comments.stream().map(Comment::toDto).toList())
             .build();
     }
@@ -81,6 +85,7 @@ public class Card extends BaseEntity {
             .modifiedAt(getModifiedAt())
             .isFinished(isFinished)
             .isHidden(isHidden)
+            .isPrivate(isPrivate)
             .build();
     }
 
@@ -95,5 +100,9 @@ public class Card extends BaseEntity {
 
     public void toggleFinish() {
         this.isFinished = !this.isFinished;
+    }
+
+    public void togglePrivate() {
+        this.isPrivate = !this.isPrivate;
     }
 }

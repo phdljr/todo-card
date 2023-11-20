@@ -2,6 +2,7 @@ package com.phdljr.todocard.exception.handler;
 
 import com.phdljr.todocard.exception.dto.ExceptionResponseDto;
 import com.phdljr.todocard.exception.dto.ValidExceptionResponseDto;
+import com.phdljr.todocard.exception.type.AccessPrivateCardException;
 import com.phdljr.todocard.exception.type.CustomException;
 import com.phdljr.todocard.exception.type.DuplicateEmailException;
 import com.phdljr.todocard.exception.type.DuplicateUsernameException;
@@ -22,7 +23,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidExceptionResponseDto> handleMethodArgumentNotValidException(
-        BindingResult bindingResult) {
+        BindingResult bindingResult
+    ) {
 
         ValidExceptionResponseDto responseDto
             = new ValidExceptionResponseDto(400, bindingResult);
@@ -65,6 +67,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(CustomException.DUPLICATE_EMAIL.toDto());
+    }
+
+    @ExceptionHandler(AccessPrivateCardException.class)
+    public ResponseEntity<ExceptionResponseDto> handleAccessPrivateCardException() {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(CustomException.PRIVATE_CARD_ACCESS.toDto());
     }
 
 }

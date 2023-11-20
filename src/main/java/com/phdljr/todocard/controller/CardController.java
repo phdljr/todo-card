@@ -30,22 +30,28 @@ public class CardController {
     private final CardService cardService;
 
     @GetMapping("/cards/{cardId}")
-    public ResponseEntity<CardResponseDto> getCard(@PathVariable Long cardId) {
-        CardResponseDto cardResponseDto = cardService.getCard(cardId);
+    public ResponseEntity<CardResponseDto> getCard(
+        @PathVariable Long cardId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        CardResponseDto cardResponseDto = cardService.getCard(cardId, userDetails);
         return ResponseEntity.ok(cardResponseDto);
     }
 
     @GetMapping("/cards")
     public ResponseEntity<List<CardsResponseDto>> getCards(
-        @RequestParam(required = false, name = "title", defaultValue = "") String title) {
-        List<CardsResponseDto> cardsResponseDto = cardService.getCards(title);
+        @RequestParam(required = false, name = "title", defaultValue = "") String title,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        List<CardsResponseDto> cardsResponseDto = cardService.getCards(title, userDetails);
         return ResponseEntity.ok(cardsResponseDto);
     }
 
     @PostMapping("/cards")
     public ResponseEntity<CardResponseDto> createCard(
         @RequestBody CardRequestDto cardRequestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         CardResponseDto cardResponseDto = cardService.createCard(cardRequestDto,
             userDetails.getUser());
         return ResponseEntity.status(HttpStatus.CREATED).body(cardResponseDto);
@@ -55,31 +61,48 @@ public class CardController {
     public ResponseEntity<CardResponseDto> updateCard(
         @PathVariable Long cardId,
         @RequestBody CardRequestDto cardRequestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         CardResponseDto cardResponseDto = cardService.updateCard(cardId, cardRequestDto,
             userDetails.getUser());
         return ResponseEntity.ok(cardResponseDto);
     }
 
     @PutMapping("/cards/{cardId}/hide")
-    public ResponseEntity<CardResponseDto> toggleHideCard(@PathVariable Long cardId,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<CardResponseDto> toggleHideCard(
+        @PathVariable Long cardId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         CardResponseDto cardResponseDto = cardService.toggleHideCard(cardId,
             userDetails.getUser());
         return ResponseEntity.ok(cardResponseDto);
     }
 
     @PutMapping("/cards/{cardId}/finish")
-    public ResponseEntity<CardResponseDto> toggleFinishCard(@PathVariable Long cardId,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<CardResponseDto> toggleFinishCard(
+        @PathVariable Long cardId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         CardResponseDto cardResponseDto = cardService.toggleFinishCard(cardId,
             userDetails.getUser());
         return ResponseEntity.ok(cardResponseDto);
     }
 
+    @PutMapping("/cards/{cardId}/private")
+    public ResponseEntity<CardResponseDto> togglePrivate(
+        @PathVariable Long cardId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        CardResponseDto cardResponseDto = cardService.togglePrivateCard(cardId,
+            userDetails.getUser());
+        return ResponseEntity.ok(cardResponseDto);
+    }
+
     @DeleteMapping("/cards/{cardId}")
-    public ResponseEntity<Long> deleteCard(@PathVariable Long cardId,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<Long> deleteCard(
+        @PathVariable Long cardId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         Long id = cardService.deleteCard(cardId, userDetails.getUser());
         return ResponseEntity.ok(id);
     }

@@ -14,6 +14,7 @@ public class CardsResponseDto {
     private String content;
     private boolean isFinished;
     private boolean isHidden;
+    private boolean isPrivate;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 }
