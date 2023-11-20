@@ -12,9 +12,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition(
-    info = @Info(title = "TODO App API 명세",
+    info = @Info(
+        title = "TODO App API 명세",
         description = "TODO App API 명세서 입니다. ",
-        version = "v1")
+        version = "v1"
+    )
     , servers = {
     @Server(url = "/", description = "API 서버"),
 }
