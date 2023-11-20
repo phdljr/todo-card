@@ -41,7 +41,10 @@ public class JwtExceptionHandlerFilter extends OncePerRequestFilter {
         }
     }
 
-    private void setErrorResponse(HttpServletResponse response, CustomException customException) {
+    private void setErrorResponse(
+        HttpServletResponse response,
+        CustomException customException
+    ) {
         ObjectMapper objectMapper = new ObjectMapper();
         response.setStatus(customException.getStatusCode());
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);

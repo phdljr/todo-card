@@ -26,7 +26,8 @@ public class CommentController {
     public ResponseEntity<CommentResponseDto> createComment(
         @PathVariable Long cardId,
         @RequestBody CommentRequestDto commentRequestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         CommentResponseDto commentResponseDto
             = commentService.createComment(cardId, commentRequestDto, userDetails.getUser());
         return ResponseEntity.ok(commentResponseDto);
@@ -36,7 +37,8 @@ public class CommentController {
     public ResponseEntity<CommentResponseDto> updateComment(
         @PathVariable Long commentId,
         @RequestBody CommentRequestDto commentRequestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         CommentResponseDto commentResponseDto
             = commentService.updateComment(commentId, commentRequestDto, userDetails.getUser());
         return ResponseEntity.ok(commentResponseDto);
@@ -45,7 +47,8 @@ public class CommentController {
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<Long> deleteComment(
         @PathVariable Long commentId,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         Long id = commentService.deleteComment(commentId, userDetails.getUser());
         return ResponseEntity.ok(id);
     }
