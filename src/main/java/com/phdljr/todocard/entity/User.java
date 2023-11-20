@@ -26,15 +26,12 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 4, max = 10, message = "길이가 4~10 사이여야 합니다.")
-    @Pattern(regexp = "[a-z0-9]{4,10}", message = "소문자 알파벳과 숫자만 입력가능합니다.")
     @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Email(message = "이메일 형식이 아닙니다.")
     @Column(nullable = false)
     private String email;
 
