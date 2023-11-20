@@ -2,7 +2,6 @@ package com.phdljr.todocard.exception.dto;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Builder;
 import lombok.Getter;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;

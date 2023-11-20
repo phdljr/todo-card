@@ -3,15 +3,9 @@ package com.phdljr.todocard.dto.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class SignUpRequestDto {
 
     @Size(min = 4, max = 10, message = "username의 길이가 4~10 사이여야 합니다.")
