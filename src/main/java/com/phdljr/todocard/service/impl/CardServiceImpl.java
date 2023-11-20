@@ -51,12 +51,7 @@ public class CardServiceImpl implements CardService {
     @Transactional
     public CardResponseDto updateCard(final Long cardId, final CardRequestDto cardRequestDto,
         final User user) {
-        Card card = cardRepository.findById(cardId)
-            .orElseThrow(NotFoundCardException::new);
-
-        if (!card.getUser().getId().equals(user.getId())) {
-            throw new NotMatchUserException();
-        }
+        Card card = findByIdWithUser(cardId, user);
 
         card.update(cardRequestDto);
         return card.toCardResponseDto();
@@ -76,12 +71,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public Long deleteCard(final Long cardId, final User user) {
-        Card card = cardRepository.findById(cardId)
-            .orElseThrow(NotFoundCardException::new);
-
-        if (!card.getUser().getId().equals(user.getId())) {
-            throw new NotMatchUserException();
-        }
+        Card card = findByIdWithUser(cardId, user);
 
         cardRepository.delete(card);
         return cardId;
@@ -90,12 +80,7 @@ public class CardServiceImpl implements CardService {
     @Override
     @Transactional
     public CardResponseDto toggleHideCard(final Long cardId, final User user) {
-        Card card = cardRepository.findById(cardId)
-            .orElseThrow(NotFoundCardException::new);
-
-        if (!card.getUser().getId().equals(user.getId())) {
-            throw new NotMatchUserException();
-        }
+        Card card = findByIdWithUser(cardId, user);
 
         card.toggleHide();
         return card.toCardResponseDto();
@@ -104,6 +89,13 @@ public class CardServiceImpl implements CardService {
     @Override
     @Transactional
     public CardResponseDto toggleFinishCard(final Long cardId, final User user) {
+        Card card = findByIdWithUser(cardId, user);
+
+        card.toggleFinish();
+        return card.toCardResponseDto();
+    }
+
+    private Card findByIdWithUser(final Long cardId, final User user) {
         Card card = cardRepository.findById(cardId)
             .orElseThrow(NotFoundCardException::new);
 
@@ -111,7 +103,6 @@ public class CardServiceImpl implements CardService {
             throw new NotMatchUserException();
         }
 
-        card.toggleFinish();
-        return card.toCardResponseDto();
+        return card;
     }
 }

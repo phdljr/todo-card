@@ -89,7 +89,6 @@ public class JwtUtil {
             log.error("JWT claims is empty, 잘못된 JWT 토큰입니다.");
             throw e;
         }
-//        return false;
     }
 
     // 토큰에서 사용자 정보 가져오기

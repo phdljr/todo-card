@@ -20,9 +20,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-//    @Value("${custom.admin.token}")
-//    private String ADMIN_TOKEN;
-
     public SignUpResponseDto signup(SignUpRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
@@ -39,15 +36,6 @@ public class UserServiceImpl implements UserService {
         if (checkEmail.isPresent()) {
             throw new DuplicateEmailException();
         }
-
-        // 사용자 ROLE 확인
-//        UserRole role = UserRole.USER;
-//        if (requestDto.isAdmin()) {
-//            if (!ADMIN_TOKEN.equals(requestDto.getAdminToken())) {
-//                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
-//            }
-//            role = UserRole.ADMIN;
-//        }
 
         // 사용자 등록
         User user = User.builder()

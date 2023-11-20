@@ -31,7 +31,6 @@ public class WebSecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtExceptionHandlerFilter jwtExceptionHandlerFilter;
-//    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -75,7 +74,6 @@ public class WebSecurityConfig {
                     .requestMatchers("/").permitAll()
                     .requestMatchers("/api/v1/user/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/v1/cards/**").permitAll()
-//                .requestMatchers("/api/v1/admin/**").hasAuthority(Authority.ADMIN)
                     .anyRequest().authenticated()
         );
 
@@ -87,8 +85,6 @@ public class WebSecurityConfig {
         http.addFilterBefore(jwtExceptionHandlerFilter, JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
-//        http.exceptionHandling(handler -> handler.accessDeniedHandler(customAccessDeniedHandler));
 
         return http.build();
     }

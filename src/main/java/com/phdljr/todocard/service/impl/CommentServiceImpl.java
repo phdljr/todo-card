@@ -24,8 +24,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentResponseDto createComment(final Long cardId,
-        final CommentRequestDto commentRequestDto,
-        final User user) {
+        final CommentRequestDto commentRequestDto, final User user) {
 
         Card card = cardRepository.findById(cardId).orElseThrow(NotFoundCardException::new);
 
@@ -41,15 +40,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public CommentResponseDto updateComment(final Long commentId,
-        final CommentRequestDto commentRequestDto,
-        final User user) {
-
-        Comment comment = commentRepository.findById(commentId)
-            .orElseThrow(NotFoundCommentException::new);
-
-        if (!comment.getUser().getId().equals(user.getId())) {
-            throw new NotMatchUserException();
-        }
+        final CommentRequestDto commentRequestDto, final User user) {
+        Comment comment = findByCommentWithUser(commentId, user);
 
         comment.update(commentRequestDto.getContent());
 
@@ -58,6 +50,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Long deleteComment(final Long commentId, final User user) {
+        Comment comment = findByCommentWithUser(commentId, user);
+
+        commentRepository.delete(comment);
+
+        return commentId;
+    }
+
+    private Comment findByCommentWithUser(final Long commentId, final User user) {
         Comment comment = commentRepository.findById(commentId)
             .orElseThrow(NotFoundCommentException::new);
 
@@ -65,8 +65,6 @@ public class CommentServiceImpl implements CommentService {
             throw new NotMatchUserException();
         }
 
-        commentRepository.delete(comment);
-
-        return commentId;
+        return comment;
     }
 }

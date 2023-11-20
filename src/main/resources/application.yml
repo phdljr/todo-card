@@ -18,8 +18,6 @@ spring:
         use_sql_comments: true
 
 custom:
-  admin:
-    token: AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC
   jwt:
-    expiration-period: 3600000
+    expiration-period: 10000
     secret-key: vqRI8jIQAPb3l99QxAYvV5Gvva3VbBgWPbgfM0w1qWUBngWGsTPPodClklX0KqAthjscE4qkHtzWqYUoZabIVDU9AguLi4op2id5ZXF7Wd96wbEyoKBuCblBg7BOXNmBf2PtVXX0Cjhfu7z1acVSV9HCBf9PWvodoFCGe63TNa860mBLOoFGB4FF6tWW6Vr81baGKAtujaclAOzaZFjqmxAWqiQt2zwhrxJkWlKqKjMCfBFhODgye6V1Bs6OC6Zo
