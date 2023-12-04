@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import java.beans.ConstructorProperties;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,6 +33,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
+    @Email
     @Column(nullable = false)
     private String email;
 
