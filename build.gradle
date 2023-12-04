@@ -46,7 +46,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.h2database/h2
     testImplementation 'com.h2database:h2:2.2.224'
 
-    testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.0")
+    // https://mvnrepository.com/artifact/com.navercorp.fixturemonkey/fixture-monkey-starter
+    implementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.4'
 }
 
 tasks.named('bootBuildImage') {
