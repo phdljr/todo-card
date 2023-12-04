@@ -46,6 +46,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.h2database/h2
     testImplementation 'com.h2database:h2:2.2.224'
 
+    testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.0")
 }
 
 tasks.named('bootBuildImage') {
@@ -56,13 +57,22 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacoco {
+    toolVersion = "0.8.9"
+    reportsDirectory = layout.projectDirectory.dir('reports/jacoco')
+//    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
 jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+
     reports {
         xml.required = false
         csv.required = false
         html.required  = true
-
-        html.destination file("jacoco/jacocoHtml")
-        xml.destination file("jacoco/jacoco.xml")
     }
 }
