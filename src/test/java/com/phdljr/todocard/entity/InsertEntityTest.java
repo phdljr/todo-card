@@ -41,8 +41,6 @@ public class InsertEntityTest {
             .title("title")
             .user(user)
             .content("content")
-            .isHidden(false)
-            .isFinished(false)
             .build();
         cardRepository.save(card);
 

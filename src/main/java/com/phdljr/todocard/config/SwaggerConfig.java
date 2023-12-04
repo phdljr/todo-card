@@ -18,8 +18,8 @@ import org.springframework.context.annotation.Configuration;
         version = "v1"
     )
     , servers = {
-    @Server(url = "/", description = "API 서버"),
-}
+        @Server(url = "/", description = "API 서버"),
+    }
 )
 @Configuration
 public class SwaggerConfig {
