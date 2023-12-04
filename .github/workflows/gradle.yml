@@ -10,7 +10,10 @@ on:
       - master
       - develop
 
+# public test results 스탭을 위한 권한 설정
 permissions:
+  contents: read
+  issues: read
   checks: write
   pull-requests: write
 
