@@ -1,5 +1,9 @@
-package com.phdljr.todocard.entity;
+package com.phdljr.todocard;
 
+import com.phdljr.todocard.entity.Card;
+import com.phdljr.todocard.entity.Comment;
+import com.phdljr.todocard.entity.User;
+import com.phdljr.todocard.entity.UserRole;
 import com.phdljr.todocard.repository.CardRepository;
 import com.phdljr.todocard.repository.CommentRepository;
 import com.phdljr.todocard.repository.UserRepository;
@@ -10,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
-public class InsertEntityTest {
+public class InsertDummyEntity {
     @Autowired
     UserRepository userRepository;
     @Autowired
