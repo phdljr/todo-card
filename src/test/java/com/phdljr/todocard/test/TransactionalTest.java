@@ -6,7 +6,6 @@ import com.phdljr.todocard.entity.User;
 import com.phdljr.todocard.entity.UserRole;
 import com.phdljr.todocard.repository.UserRepository;
 import java.util.Optional;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +33,14 @@ public class TransactionalTest {
 
         try {
             testPropagation();
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
 
         }
 
     }
 
     @Transactional(propagation = Propagation.NESTED)
-    public void testPropagation(){
+    public void testPropagation() {
         User user = User.builder()
             .username("username2")
             .role(UserRole.USER)
