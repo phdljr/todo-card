@@ -38,9 +38,10 @@ public class EntityFixtureMonkeyTest {
     @Test
     public void relationalTest(){
         List<User> users = fixtureMonkey.giveMeBuilder(User.class)
+            .setNull("id")
             .setNotNull("*")
             .set("password", Arbitraries.strings().withCharRange('a', 'z').ofLength(10))
-            .sampleList(1000);
+            .sampleList(10);
         userRepository.saveAll(users);
 
         List<Card> cards = fixtureMonkey.giveMeBuilder(Card.class)
